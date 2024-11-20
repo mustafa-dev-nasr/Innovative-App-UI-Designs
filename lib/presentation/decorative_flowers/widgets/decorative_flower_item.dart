@@ -3,30 +3,55 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_task2/presentation/decorative_flowers/widgets/custom_painter_rps.dart';
 import '../../../constants/assets.dart';
 
-class DecorativeFlowerItem extends StatelessWidget {
+class DecorativeFlowerItem extends StatefulWidget {
   const DecorativeFlowerItem({super.key});
 
   @override
+  State<DecorativeFlowerItem> createState() => _DecorativeFlowerItemState();
+}
+
+class _DecorativeFlowerItemState extends State<DecorativeFlowerItem> {
+  bool _isImageExpanded = false; 
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 110.h,
-      width: MediaQuery.of(context).size.width * 0.8,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(35.w),
-      ),
-      margin: EdgeInsets.only(bottom: 20.h),
-      child: Stack(
-        children: [
-          const FlowerIcon(),
-          const FlowerImage(),
-          Positioned(
-            top: 20.h,
-            left: 100.w,
-            right: 50.w,
-            child: const FlowerDetails(),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isImageExpanded = !_isImageExpanded;
+
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+        height: 110.h,
+        width: MediaQuery.of(context).size.width * 0.8,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(35.w),
+        ),
+        margin: EdgeInsets.only(bottom: 20.h),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            const FlowerIcon(),
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 1),
+              curve: Curves.easeInOut,
+              bottom: _isImageExpanded ? -50.w : 10.w, // تغيّر الموقع
+              top: _isImageExpanded ? -20.h : 10.h, // تغيّر الموقع
+              child: const FlowerImage(),
+            ),
+            
+            Positioned(
+              top: 20.h,
+              left: 100.w,
+              right: 50.w,
+              child: const FlowerDetails(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -62,15 +87,12 @@ class FlowerImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: SizedBox(
-        child: Image.asset(
-          Assets.assetsSvgsPlants, // Path to the image
-          height: 85.h,
-          width: 80.w,
-          fit: BoxFit.cover,
-        ),
+    return SizedBox(
+      child: Image.asset(
+        Assets.assetsSvgsPlants,
+        height: 85.h,
+        width: 80.w,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -96,7 +118,7 @@ class FlowerDetails extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         Text(
-          'Decorative Flowers', // Fixed title
+          'Decorative Flowers',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 12.sp,
@@ -104,7 +126,7 @@ class FlowerDetails extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         Text(
-          '\$20.00', // Fixed price
+          '\$20.00',
           style: TextStyle(
             fontSize: 10.sp,
             color: Colors.green,
@@ -140,7 +162,7 @@ class QuantityControl extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 5.w),
           child: Text(
-            'x6', // Default quantity value
+            'x6',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10.sp),
           ),
         ),
