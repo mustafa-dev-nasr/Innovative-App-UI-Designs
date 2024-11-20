@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_task2/presentation/decorative_flowers/widgets/decorative_flower_item.dart';
@@ -13,9 +11,9 @@ class DecorativeFlowersList extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w),
         child: ListView.builder(
-          itemCount: 15, 
+          itemCount: 15,
           itemBuilder: (context, index) {
-            return  DecorativeFlowerItem();
+            return const DecorativeFlowerItem();
           },
         ),
       ),

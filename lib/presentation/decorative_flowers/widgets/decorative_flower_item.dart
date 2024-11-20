@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:project_task2/presentation/decorative_flowers/widgets/custom_painter_rps.dart';
 import '../../../constants/assets.dart';
+import 'custom_painter_rps.dart';
 
 class DecorativeFlowerItem extends StatefulWidget {
   const DecorativeFlowerItem({super.key});
@@ -11,7 +11,7 @@ class DecorativeFlowerItem extends StatefulWidget {
 }
 
 class _DecorativeFlowerItemState extends State<DecorativeFlowerItem> {
-  bool _isImageExpanded = false; 
+  bool _isImageExpanded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -19,39 +19,50 @@ class _DecorativeFlowerItemState extends State<DecorativeFlowerItem> {
       onTap: () {
         setState(() {
           _isImageExpanded = !_isImageExpanded;
-
         });
       },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-        height: 110.h,
-        width: MediaQuery.of(context).size.width * 0.8,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(35.w),
-        ),
-        margin: EdgeInsets.only(bottom: 20.h),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            const FlowerIcon(),
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 1),
-              curve: Curves.easeInOut,
-              bottom: _isImageExpanded ? -50.w : 10.w, // تغيّر الموقع
-              top: _isImageExpanded ? -20.h : 10.h, // تغيّر الموقع
-              child: const FlowerImage(),
-            ),
-            
-            Positioned(
-              top: 20.h,
-              left: 100.w,
-              right: 50.w,
-              child: const FlowerDetails(),
-            ),
-          ],
-        ),
+      child: Column(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                height: 110.h,
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(35.w),
+                ),
+                margin: EdgeInsets.only(bottom: 20.h),
+                child: Stack(
+                  children: [
+                    const Align(
+                        alignment: Alignment.centerRight, child: FlowerIcon()),
+                    Positioned(
+                      top: 20.h,
+                      left: 100.w,
+                      right: 50.w,
+                      child: const FlowerDetails(),
+                    ),
+                  ],
+                ),
+              ),
+              AnimatedPositioned(
+                duration: const Duration(microseconds: 1),
+                bottom: _isImageExpanded ? -50.w : 20.w,
+                top: 10.h,
+                child: FlowerImage(
+                  isImageExpanded: _isImageExpanded,
+                ),
+              ),
+            ],
+          ),
+          _isImageExpanded
+              ? SizedBox(
+                  height: 80.h,
+                )
+              : const SizedBox(),
+        ],
       ),
     );
   }
@@ -59,7 +70,6 @@ class _DecorativeFlowerItemState extends State<DecorativeFlowerItem> {
 
 class FlowerIcon extends StatelessWidget {
   const FlowerIcon({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -68,13 +78,16 @@ class FlowerIcon extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           CustomPaint(
-            size: Size(45.w, 27.h),
+            size: Size(36.w, 27.h),
             painter: RPSCustomPainter(),
           ),
-          const Icon(
-            Icons.lock,
-            color: Colors.black,
-            size: 12,
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.lock,
+              color: Colors.black,
+              size: 10,
+            ),
           ),
         ],
       ),
@@ -83,15 +96,16 @@ class FlowerIcon extends StatelessWidget {
 }
 
 class FlowerImage extends StatelessWidget {
-  const FlowerImage({super.key});
+  const FlowerImage({super.key, required this.isImageExpanded});
+  final bool isImageExpanded;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Image.asset(
         Assets.assetsSvgsPlants,
-        height: 85.h,
-        width: 80.w,
+        height: isImageExpanded ? 100.h : 85.h,
+        width: isImageExpanded ? 150.w : 80.w,
         fit: BoxFit.cover,
       ),
     );
@@ -133,7 +147,7 @@ class FlowerDetails extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        6.verticalSpace,
+        SizedBox(height: 6.h),
         const QuantityControl(),
       ],
     );
@@ -179,6 +193,26 @@ class QuantityControl extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class DecorativeFlowersList extends StatelessWidget {
+  const DecorativeFlowersList({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w),
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: 15,
+          itemBuilder: (context, index) {
+            return const DecorativeFlowerItem();
+          },
+        ),
+      ),
     );
   }
 }
