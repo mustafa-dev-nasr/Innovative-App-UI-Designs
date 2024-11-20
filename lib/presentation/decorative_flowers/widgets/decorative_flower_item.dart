@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../constants/assets.dart';
+import '../../second_screen/second_screen.dart';
 import 'custom_painter_rps.dart';
 
 class DecorativeFlowerItem extends StatefulWidget {
@@ -20,6 +21,21 @@ class _DecorativeFlowerItemState extends State<DecorativeFlowerItem> {
         setState(() {
           _isImageExpanded = !_isImageExpanded;
         });
+
+        if (_isImageExpanded) {
+          Future.delayed(const Duration(milliseconds: 300), () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const SecondScreen(), // استبدل بـ شاشتك الثانية
+              ),
+            );
+            setState(() {
+              _isImageExpanded = false;
+            });
+          });
+        }
       },
       child: Column(
         children: [
