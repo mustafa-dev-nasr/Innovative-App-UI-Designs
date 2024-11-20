@@ -13,7 +13,7 @@ class DecorativeFlowersList extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(top: 20.h, left: 20.w, right: 20.w),
         child: ListView.builder(
-          itemCount: 15, // You can change this count based on your items
+          itemCount: 15, 
           itemBuilder: (context, index) {
             return const DecorativeFlowerItem();
           },

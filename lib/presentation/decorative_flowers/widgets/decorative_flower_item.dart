@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_task2/presentation/decorative_flowers/widgets/custom_painter_rps.dart';
-
 import '../../../constants/assets.dart';
 
 class DecorativeFlowerItem extends StatelessWidget {
@@ -12,11 +9,11 @@ class DecorativeFlowerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120.h,
+      height: 110.h,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20.w),
+        borderRadius: BorderRadius.circular(35.w),
       ),
       margin: EdgeInsets.only(bottom: 20.h),
       child: Stack(
@@ -25,7 +22,7 @@ class DecorativeFlowerItem extends StatelessWidget {
           const FlowerImage(),
           Positioned(
             top: 20.h,
-            left: 80.w,
+            left: 100.w,
             right: 50.w,
             child: const FlowerDetails(),
           ),
@@ -46,16 +43,13 @@ class FlowerIcon extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           CustomPaint(
-            size: Size(36.w, 27.h),
+            size: Size(45.w, 27.h),
             painter: RPSCustomPainter(),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              Icons.lock,
-              color: Colors.black,
-              size: 10,
-            ),
+          const Icon(
+            Icons.lock,
+            color: Colors.black,
+            size: 12,
           ),
         ],
       ),
@@ -92,7 +86,7 @@ class FlowerDetails extends StatelessWidget {
       children: [
         Row(
           children: List.generate(
-            5, // Rating is fixed to 5 stars
+            5,
             (index) => Icon(
               Icons.star,
               color: Colors.amber,
@@ -117,7 +111,7 @@ class FlowerDetails extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        SizedBox(height: 8.h),
+        6.verticalSpace,
         const QuantityControl(),
       ],
     );
@@ -131,23 +125,35 @@ class QuantityControl extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          onPressed: () {
-            // Action for decrement
-          },
-          icon: Icon(Icons.remove, size: 10.sp),
+        Container(
+          height: 15.h,
+          width: 20.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.green[300],
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Icon(Icons.remove, size: 10.sp),
+          ),
         ),
-        Text(
-          '1', // Default quantity value
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 8.sp),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          child: Text(
+            'x6', // Default quantity value
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 10.sp),
+          ),
         ),
-        IconButton(
-          onPressed: () {
-            // Action for increment
-          },
-          icon: Icon(
-            Icons.add,
-            size: 10.sp,
+        Container(
+          height: 15.h,
+          width: 20.w,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.green[300],
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Icon(Icons.add, size: 10.sp),
           ),
         ),
       ],
